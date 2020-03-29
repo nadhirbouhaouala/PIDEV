@@ -1,0 +1,98 @@
+{% extends '@Nozelites/baseback.html.twig' %}
+
+{% block titre %}{{ parent() }} - Acceuil {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+{% endblock %}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Groupe</h3>
+                            <br>
+                            <h4><b>Titre : </b><h5>{{ groupe.titre }}</h5></h4>
+                            <br>
+                            <h4><b>Description : </b><h5>{{ groupe.description }}</h5></h4>
+                            <br>
+                            <h4><b>Titre : </b><h5>{% if groupe.autorisation == 1 %}fermé{%  else %}ouvert{%  endif %}</h5></h4>
+
+
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="tableau" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Login</th>
+                                    <th>Mail</th>
+                                    <th>Telephone</th>
+                                    <th>bloquer</th>
+                                    <th>debloquer</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for membre in membres %}
+                                    <tr>
+                                        <td>{{ membre.login }}</td>
+                                        <td>{{ membre.mail }}</td>
+                                        <td>{{ membre.tel }}</td>
+                                        <td>
+                                            <a href="{{ path('nozelites_adminbloquermembreback',{'id':groupe.idGroupe,'idmembre':membre.idusr}) }}" class="btn btn-block btn-danger">Bloquer</a>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                {% endfor %}
+                                {% for membre in membres_b %}
+                                    <tr>
+                                        <td>{{ membre.login }}</td>
+                                        <td>{{ membre.mail }}</td>
+                                        <td>{{ membre.tel }}</td>
+                                        <td></td>
+                                        <td><a href="{{ path('nozelites_admindebloquermembreback',{'id':groupe.idGroupe,'idmembre':membre.idusr}) }}" class="btn btn-block btn-danger">Debloquer</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- DataTables -->
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+    <script>
+        $(function () {
+            $('#tableau').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+{% endblock %}
+

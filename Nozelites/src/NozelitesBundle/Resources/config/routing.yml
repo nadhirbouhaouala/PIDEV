@@ -1,0 +1,71 @@
+nozelites_homepagefront:
+    path:     /front
+    defaults: { _controller: NozelitesBundle:DefaultFront:index }
+
+
+nozelites_membregroupesfront:
+    path:     /frontmembregroupes
+    defaults: { _controller: NozelitesBundle:Groupe:showGroupesInvitations }
+nozelites_membregroupesajouterfront:
+    path:     /frontmembregroupesajouter
+    defaults: { _controller: NozelitesBundle:Groupe:newgroupeInvitation }
+nozelites_membregroupesaccepterinvitationfront:
+    path:     /frontmembregroupesaccepterinvitation/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:accepterinvitation }
+nozelites_membregroupesrefuserinvitationfront:
+    path:     /frontmembregroupesrefuserinvitation/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:refuserinvitation }
+nozelites_membregroupesmodifierfront:
+    path:     /frontmembregroupesmodifier/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:modifiergroupe }
+nozelites_membregroupessupprimerfront:
+    path:     /frontmembregroupessupprimer/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:supprimergroupe }
+nozelites_membregroupeafficherfront:
+    path:     /frontmembregroupeafficher/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:affichergroupe }
+nozelites_membreinviterfront:
+    path:     /frontmembreinviter/{id}/{idmembre}
+    defaults: { _controller: NozelitesBundle:Groupe:invitermembre }
+nozelites_membreretirerfront:
+    path:     /frontmembreretirer/{id}/{idmembre}
+    defaults: { _controller: NozelitesBundle:Groupe:retirermembre }
+
+groupe_index:
+    path:     /groupe/acceuil
+    defaults: { _controller: NozelitesBundle:Groupe:index}
+groupe_new:
+    path:     /groupe/ajouter
+    defaults: { _controller: NozelitesBundle:Groupe:new}
+groupe_show:
+    path:     /groupe/afficher/{id}
+    defaults: { _controller: NozelitesBundl	e:Groupe:show}
+groupe_edit:
+    path:     /groupe/modifier/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:edit}
+groupe_delete:
+    path:     /groupe/supprimer/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:delete}
+
+
+nozelites_homepageback:
+    path:     /back
+    defaults: { _controller: NozelitesBundle:DefaultBack:index }
+nozelites_admingroupesback:
+    path:     /backadmingroupes
+    defaults: { _controller: NozelitesBundle:Groupe:showGroupesadmin }
+nozelites_admingroupeafficherback:
+    path:     /backadmingroupe/afficher/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:affichergroupeadmin}
+nozelites_admingroupesupprimerback:
+    path:     /backadmingroupe/supprimer/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:supprimergroupeadmin}
+nozelites_admingroupemodifierback:
+    path:     /backadmingroupe/modifier/{id}
+    defaults: { _controller: NozelitesBundle:Groupe:modifiergroupeadmin}
+nozelites_adminbloquermembreback:
+    path:     /frontbloquermembre/{id}/{idmembre}
+    defaults: { _controller: NozelitesBundle:Groupe:bloquermembreadmin }
+nozelites_admindebloquermembreback:
+    path:     /frontdebloquermembre/{id}/{idmembre}
+    defaults: { _controller: NozelitesBundle:Groupe:debloquermembreadmin }

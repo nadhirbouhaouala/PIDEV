@@ -1,0 +1,168 @@
+{% extends '@Nozelites/basefrontmembre.html.twig' %}
+
+{% block titre %}{{ parent() }} - MGroupes {% endblock %}
+
+{% block content %}
+    <div class="intro-banner" data-background-image="images/home-background.jpg">
+        <div class="container">
+            <!-- Dashboard Headline -->
+            <div class="dashboard-headline">
+                <!--<h3>Bookmarks</h3>-->
+
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs" class="dark">
+                    <ul>
+                        <li><a href="{{ path('nozelites_membregroupesajouterfront') }}">ajouter</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 content-left-offset">
+
+                    <div class="dashboard-box" style="overflow-x:auto;">
+                        <!-- Headline -->
+                        <div class="headline">
+                            <h3><i class="icon-material-outline-face"></i> Mes groupes </h3>
+                            <input type="text" placeholder="Chercher ici ..." onKeyPress="chercher(this.value);" >
+                            <script type="text/javascript">
+                                function chercher(search) {
+                                    if(search==""){
+                                        {%  for gm in groupesmembres %}
+                                            {% if gm.etat == 'administrateur' or gm.etat == 'standard' or gm.etat == 'membre' %}
+                                                document.getElementById('{{ gm.idGm }}').style.display="block";
+                                            {% endif %}
+                                        {% endfor %}
+                                    }
+                                    else{
+                                        {%  for gm in groupesmembres %}
+                                            {% if gm.etat == 'administrateur' or gm.etat == 'standard' or gm.etat == 'membre' %}
+                                                if('{{ gm.idGroupe.titre }}'.toUpperCase().includes(search.toUpperCase())||'{{ gm.idGroupe.description }}'.toUpperCase().includes(search.toUpperCase()))
+                                                    document.getElementById('{{ gm.idGm }}').style.display="block";
+                                                else
+                                                    document.getElementById('{{ gm.idGm }}').style.display="none";
+                                            {% endif %}
+                                        {% endfor %}
+                                    }
+                                }
+                            </script>
+                        </div>
+
+                        <div class="content">
+                            <ul class="dashboard-box-list">
+                                {%  for gm in groupesmembres %}
+                                    {% if gm.etat == 'administrateur' or gm.etat == 'standard' or gm.etat == 'membre' %}
+
+                                    <li id="{{ gm.idGm }}">
+                                        <!-- Overview -->
+                                        <div class="freelancer-overview" onclick="document.getElementById('{{ 'show_'~gm.idGm }}').click();">
+                                            <a href="{{ path('nozelites_membregroupeafficherfront',{'id':gm.idGroupe.idGroupe}) }}" id="{{ 'show_'~gm.idGm }}"></a>
+                                            <div class="freelancer-overview-inner">
+
+                                                <!-- Avatar -->
+                                                <div class="freelancer-avatar">
+                                                    <div class="verified-badge"></div>
+                                                    <a href="#"><img src="{{ asset('images/user-avatar-big-02.jpg') }}" alt=""></a>
+                                                </div>
+
+                                                <!-- Name -->
+                                                <div class="freelancer-name">
+                                                    <h4><a href="#"> {{ gm.idGroupe.titre }}
+                                                            <img class="flag" src="images/flags/de.svg" alt="" title="Germany" data-tippy-placement="top"></a></h4>
+                                                    <span>{{ gm.idGroupe.description }} </span>
+                                                    <!-- Rating -->
+                                                    <div class="freelancer-rating">
+                                                        <div class="star-rating" data-rating="4.2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Buttons -->
+                                        <div class="buttons-to-right">
+                                            <a href="{{ path('nozelites_membregroupesmodifierfront',{'id':gm.idGroupe.idGroupe}) }}" class="button red ripple-effect ico" title="Modifier" data-tippy-placement="left"><i class="icon-feather-edit-2"></i></a>
+                                            {% if gm.etat == "administrateur" %}
+                                                <a href="{{ path('nozelites_membregroupessupprimerfront',{'id':gm.idGroupe.idGroupe}) }}" class="button red ripple-effect ico" title="Supprimer" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
+                                            {% endif %}
+                                            <!--<a href="#" class="button red ripple-effect ico" title="Accepter" data-tippy-placement="left"><i class="icon-material-outline-check"></i></a>
+                                            <a href="#" class="button red ripple-effect ico" title="Refuser" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>-->
+                                        </div>
+                                    </li>
+
+                                    {% endif %}
+                                {%  endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+
+            </div>
+
+                <!-- Dashboard Box -->
+                <div class="col-xl-6 col-lg-6">
+                    <div class="dashboard-box">
+
+                        <!-- Headline -->
+                        <div class="headline">
+                            <h3><i class="icon-material-outline-face"></i> Mes Invitations </h3>
+                        </div>
+
+                        <div class="content">
+                            <ul class="dashboard-box-list">
+                                {%  for gm in groupesmembres %}
+                                    {% if gm.etat == "invitation" %}
+
+                                <li>
+                                    <!-- Overview -->
+                                    <div class="freelancer-overview" onclick="alert('show')">
+                                        <div class="freelancer-overview-inner">
+
+                                            <!-- Avatar -->
+                                            <div class="freelancer-avatar">
+                                                <div class="verified-badge"></div>
+                                                <a href="#"><img src="{{ asset('images/user-avatar-big-02.jpg') }}" alt=""></a>
+                                            </div>
+
+                                            <!-- Name -->
+                                            <div class="freelancer-name">
+                                                <h4><a href="#"> {{ gm.idGroupe.titre }} -
+                                                        {% if gm.idInvite != -1 %}
+                                                            {% for indexmembre in membres %}
+                                                                {% if indexmembre.idUsr == gm.idInvite %}
+                                                                    {{ indexmembre.login }}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                        <img class="flag" src="images/flags/de.svg" alt="" title="Germany" data-tippy-placement="top"></a></h4>
+                                                <span>iOS Expert + Node Dev</span>
+                                                <!-- Rating -->
+                                                <div class="freelancer-rating">
+                                                    <div class="star-rating" data-rating="4.2"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Buttons -->
+                                    <div class="buttons-to-right">
+                                        <!--<a href="#" class="button red ripple-effect ico" title="Remove" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
+                                        <a href="#" class="button red ripple-effect ico" title="edit" data-tippy-placement="left"><i class="icon-feather-edit-2"></i></a>-->
+                                        <a href="{{ path('nozelites_membregroupesaccepterinvitationfront',{'id':gm.idGm}) }}" onclick="alert('{{ gm.idGm }}')" class="button red ripple-effect ico" title="Accepter" data-tippy-placement="left"><i class="icon-material-outline-check"></i></a>
+                                        <a href="{{ path('nozelites_membregroupesrefuserinvitationfront',{'id':gm.idGm}) }}" class="button red ripple-effect ico" title="Refuser" data-tippy-placement="left"><i class="icon-feather-x"></i></a>
+                                    </div>
+                                </li>
+
+                                    {% endif %}
+                                {%  endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
